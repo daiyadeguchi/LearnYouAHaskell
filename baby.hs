@@ -51,9 +51,12 @@ second (_, y, _) = y
 third :: (a, b, c) -> c
 third (_, _, z) = z
 
+--head' :: [a] -> a
+--head' [] = error "Can't call head on an empty list"
+--head' (x:_) = x
 head' :: [a] -> a
-head' [] = error "Can't call head on an empty list"
-head' (x:_) = x
+head' xs = case xs of [] ->  error "No head for empty list"
+                      (x:_) -> x
 
 length' :: (Num b) => [a] -> b
 length' [] = 0
@@ -110,3 +113,7 @@ cylinder r h =
   in  sideArea + 2 * topArea
 
 
+describeList :: [a] -> String
+describeList xs = "The list is " ++ case xs of [] -> "empty"
+                                               [x] -> "a singleton list"
+                                               xs -> "a longer list"
