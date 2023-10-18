@@ -67,17 +67,46 @@ capital :: String -> String
 capital "" = "Empty string"
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
 
---bmiTell :: (RealFloat a) => a -> String
---bmiTell bmi
---  | bmi <= 18.5 = "underweight"
---  | bmi <= 25.0 = "normal"
---  | bmi <= 30.0 = "overweight"
---  | otherwise   = "Giant"
-
 bmiTell :: (RealFloat a) => a -> a -> String
-bmiTell weight height
-  | weight / height ^ 2 <= 18.5 = "underweight"
-  | weight / height ^ 2 <= 25.0 = "normal"
-  | weight / height ^ 2 <= 30.0 = "overweight"
-  | otherwise                   = "gigentic"
+bmiTell weight height 
+  | bmi <= skinny = "underweight"
+  | bmi <= normal = "normal"
+  | bmi <= fat = "overweight"
+  | otherwise   = "Giant"
+  where bmi = weight / height ^ 2
+        (skinny, normal, fat) = (18.5, 25.0, 30.0)
+
+-- bmiTell :: (RealFloat a) => a -> a -> String
+-- bmiTell weight height
+--  | weight / height ^ 2 <= 18.5 = "underweight"
+--  | weight / height ^ 2 <= 25.0 = "normal"
+--  | weight / height ^ 2 <= 30.0 = "overweight"
+--  | otherwise                   = "gigentic"
+
+max' :: (Ord a) => a -> a -> a
+max' a b
+  | a > b = a
+  | otherwise = b
+
+myCompare :: (Ord a) => a -> a -> Ordering
+a `myCompare` b
+  | a > b = GT
+  | a == b = EQ
+  | otherwise = LT
+
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+  where (f:_) = firstname
+        (l:_) = lastname
+
+calcBmis :: (RealFloat a) => [(a, a)] -> [a]
+calcBmis xs = [bmi w h | (w, h) <- xs]
+  where bmi weight height = weight / height ^ 2
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea = 2 * pi * r * h
+      topArea = pi * r ^ 2
+  in  sideArea + 2 * topArea
+
 
