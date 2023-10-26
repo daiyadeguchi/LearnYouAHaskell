@@ -23,8 +23,10 @@ zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
 --flip' f y x = f x y
 
 map' :: (a -> b) -> [a] -> [b]
-map' _ [] = []
-map' f (x:xs) = f x : map' f xs
+--map' _ [] = []
+--map' f (x:xs) = f x : map' f xs
+-- Write the same function with foldr
+map' f xs = foldr (\x acc -> f x : acc) [] xs
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
@@ -64,4 +66,9 @@ flip' :: (a -> b -> c) -> b -> a -> c
 flip' f = \x y -> f y x
 
 sum' :: (Num a) => [a] -> a
-sum' xs = foldl (\acc x -> acc + x) 0 xs
+--sum' xs = foldl (\acc x -> acc + x) 0 xs
+sum' = foldl (+) 0
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y ys = foldl (\acc x -> if x == y then True else acc) False ys
+
